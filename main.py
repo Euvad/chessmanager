@@ -1,8 +1,32 @@
-from source.views.menu import MenuView
+from consolemenu import ConsoleMenu
+from consolemenu.items import FunctionItem
+from source.controllers.tournament import TournamentController
+from source.controllers.player import PlayerController
+
+MENU_TITLE = """\
+      _______ ______________  __  ____  _______
+     / ___/ // / __/ __/ __/ /  |/  / |/ / ___/
+    / /__/ _  / _/_\ \_\ \  / /|_/ /    / (_ / 
+    \___/_//_/___/___/___/ /_/  /_/_/|_/\___/  """
+
+MAIN_DESC = "Welcome manager!"
+
 
 def main():
-    menu_view = MenuView()
-    menu_view.show_main_menu()
+    menu = ConsoleMenu(MENU_TITLE, MAIN_DESC)
+
+    # Instance creation
+    tournament_controller = TournamentController()
+    player_controller = PlayerController()
+    # Add items to the menu
+    new_tournament = FunctionItem(
+        "Create a new tournament", tournament_controller.new_tournament
+    )
+    new_player = FunctionItem("Create a new player", player_controller.new_player)
+    menu.append_item(new_tournament)
+    menu.append_item(new_player)
+    menu.show()
+
 
 if __name__ == "__main__":
     main()
