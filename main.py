@@ -23,7 +23,11 @@ def main():
         "Create a new tournament", tournament_controller.new_tournament
     )
     new_player = FunctionItem("Create a new player", player_controller.new_player)
+    load_tournament = FunctionItem(
+        "Load a tournament", tournament_controller.load_tournament
+    )
     menu.append_item(new_tournament)
+    menu.append_item(load_tournament)
     menu.append_item(new_player)
     menu.show()
 

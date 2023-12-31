@@ -1,6 +1,8 @@
 from tinydb import TinyDB
+import time
 
 
+# mettre tinydb player db plus global
 class Player:
     def __init__(
         self,
@@ -21,7 +23,7 @@ class Player:
 
     def format_player(self):
         return {
-            "id": self.p_id,
+            # "id": self.p_id,
             "last_name": self.last_name,
             "first_name": self.first_name,
             "date_of_birth": self.birthday,
@@ -30,6 +32,9 @@ class Player:
         }
 
     def save_player_db(self):
-        players_db = self.player_db
-        self.p_id = players_db.insert(self.format_player())
-        players_db.update({"id": self.p_id}, doc_ids=[self.p_id])
+        self.p_id = self.player_db.insert(self.format_player())
+
+    @staticmethod
+    def get_player_db():
+        players_db = TinyDB("database/players.json")
+        return players_db.all()

@@ -18,7 +18,6 @@ class PlayerView:
             "birthdate": birthdate,
             "gender": gender,
         }
-        self.print_success(player_data)
         return player_data
 
     def print_success(self, player_data):

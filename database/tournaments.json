@@ -1,1 +1,49 @@
-{"_default": {"1": {"id": 1, "name": "sd", "location": "sd", "start_date": "Not started", "end_date": "TBD", "description": "sd", "current_round": 1, "rounds_total": 4, "rounds": []}}}
+{
+    "_default": {
+        "1": {
+            "name": "sdfgsdfg",
+            "location": "sdsdfgsdfgs",
+            "start_date": "2003-01-02T00:00:00",
+            "end_date": "2003-01-02T00:00:00",
+            "description": "sdfgsdfg",
+            "current_round": 0,
+            "rounds_total": 4,
+            "max_players": 2,
+            "players": [{
+                    "last_name": "Jaunny",
+                    "first_name": "sdfgsdfgh",
+                    "date_of_birth": "1/2/3",
+                    "gender": "F",
+                    "score": 0
+                },
+                {
+                    "last_name": "PATRVIKO",
+                    "first_name": "ADFHGFSD",
+                    "date_of_birth": "1/2/3",
+                    "gender": "F",
+                    "score": 0
+                }
+            ],
+            "rounds": [
+                1
+            ]
+        },
+        "2": {
+            "name": "testeur",
+            "location": "testeur",
+            "start_date": "2003-01-02T00:00:00",
+            "end_date": "2003-01-02T00:00:00",
+            "description": "sdgfdf",
+            "current_round": 0,
+            "rounds_total": 4,
+            "max_players": 2,
+            "players": [
+                0,
+                1
+            ],
+            "rounds": [
+                1
+            ]
+        }
+    }
+}

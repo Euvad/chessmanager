@@ -12,6 +12,8 @@ class Tournament:
         description: str,
         current_round: int,
         rounds: list,
+        max_players: int,
+        players: list,
         rounds_total=4,
     ):
         self.t_id = t_id
@@ -22,13 +24,15 @@ class Tournament:
         self.description = description
         self.current_round = current_round
         self.rounds_total = rounds_total
+        self.max_players = max_players
+        self.players = players
         self.rounds = rounds
 
         self.tournament_db = TinyDB("database/tournaments.json")
 
     def format_tournament(self):
         return {
-            "id": self.t_id,
+            # "id": self.t_id,
             "name": self.name,
             "location": self.location,
             "start_date": self.start_date,
@@ -36,10 +40,21 @@ class Tournament:
             "description": self.description,
             "current_round": self.current_round,
             "rounds_total": self.rounds_total,
+            "max_players": self.max_players,
+            "players": self.players,
             "rounds": self.rounds,
         }
 
     def save_tournament_db(self):
         db = self.tournament_db
         self.t_id = db.insert(self.format_tournament())
-        db.update({"id": self.t_id}, doc_ids=[self.t_id])
+
+    @staticmethod
+    def load_tournament_db():
+        db = TinyDB("database/tournaments.json")
+        db.all()
+        tournaments_list = []
+        for item in db:
+            tournaments_list.append(item)
+
+        return tournaments_list
