@@ -64,27 +64,33 @@ class TournamentView:
 
     def get_player_list(self, players, max_players):
         player_ids = []
-        selected_indices = set()
+        selected_doc_ids = set()
 
         player_count = 0
 
         while player_count < max_players:
+            # Afficher la liste des joueurs avec leurs "doc_id"
+            player_selections = [
+                {
+                    "doc_id": player.doc_id,
+                    "name": f"Player {player.doc_id}: {player['last_name']} {player['first_name']}",
+                }
+                for player in players
+            ]
+
             selected_index = SelectionMenu.get_selection(
-                [
-                    f"Player: {player['last_name']} {player['first_name']}"
-                    for player in players
-                ],
+                [player["name"] for player in player_selections],
                 f"Please select player {player_count + 1}/{max_players}.",
                 show_exit_option=False,
             )
 
-            # Check if the index is valid and hasn't been selected already
-            if (
-                0 <= selected_index < len(players)
-                and selected_index not in selected_indices
-            ):
-                player_ids.append(selected_index)
-                selected_indices.add(selected_index)
+            # Récupérer le "doc_id" du joueur sélectionné
+            selected_doc_id = player_selections[selected_index]["doc_id"]
+
+            # Vérifier si le "doc_id" est valide et n'a pas déjà été sélectionné
+            if selected_doc_id not in selected_doc_ids:
+                player_ids.append(selected_doc_id)
+                selected_doc_ids.add(selected_doc_id)
                 player_count += 1
                 selected_player = players[selected_index]
                 print(
@@ -93,7 +99,7 @@ class TournamentView:
             else:
                 print("Invalid selection or player already selected. Please try again.")
 
-            time.sleep(0.2)  # Add a delay if necessary
+            time.sleep(0.2)  # Ajouter un délai si nécessaire
 
         return player_ids
 

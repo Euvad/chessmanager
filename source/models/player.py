@@ -6,13 +6,11 @@ import time
 class Player:
     def __init__(
         self,
-        p_id: int,
         last_name: str,
         first_name: str,
         birthday: str,
         gender: str,
     ):
-        self.p_id = p_id
         self.last_name = last_name
         self.first_name = first_name
         self.birthday = birthday
@@ -23,7 +21,6 @@ class Player:
 
     def format_player(self):
         return {
-            # "id": self.p_id,
             "last_name": self.last_name,
             "first_name": self.first_name,
             "date_of_birth": self.birthday,
@@ -32,7 +29,7 @@ class Player:
         }
 
     def save_player_db(self):
-        self.p_id = self.player_db.insert(self.format_player())
+        self.player_db.insert(self.format_player())
 
     @staticmethod
     def get_player_db():

@@ -1,18 +1,1 @@
-{
-    "_default": {
-        "1": {
-            "last_name": "Jaunny",
-            "first_name": "sdfgsdfgh",
-            "date_of_birth": "1/2/3",
-            "gender": "F",
-            "score": 0
-        },
-        "2": {
-            "last_name": "PATRVIKO",
-            "first_name": "ADFHGFSD",
-            "date_of_birth": "1/2/3",
-            "gender": "F",
-            "score": 0
-        }
-    }
-}
+{"_default": {"1": {"last_name": "Jaunny", "first_name": "sdfgsdfgh", "date_of_birth": "1/2/3", "gender": "F", "score": 0}, "2": {"last_name": "PATRVIKO", "first_name": "ADFHGFSD", "date_of_birth": "1/2/3", "gender": "F", "score": 0}, "3": {"last_name": "efdfgs", "first_name": "sdfgsdfg", "date_of_birth": "1/2/3", "gender": "f", "score": 0.0}}}

@@ -12,7 +12,6 @@ class PlayerController:
         player_data = player_view.get_player_info()
 
         player_model = Player(
-            p_id=0,  # revoir id
             last_name=player_data["lastname"],
             first_name=player_data["firstname"],
             birthday=player_data["birthdate"],

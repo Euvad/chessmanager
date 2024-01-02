@@ -4,7 +4,6 @@ from tinydb import TinyDB
 class Tournament:
     def __init__(
         self,
-        t_id: int,
         name: str,
         location: str,
         start_date: str,
@@ -16,7 +15,6 @@ class Tournament:
         players: list,
         rounds_total=4,
     ):
-        self.t_id = t_id
         self.name = name
         self.location = location
         self.start_date = start_date
@@ -32,7 +30,6 @@ class Tournament:
 
     def format_tournament(self):
         return {
-            # "id": self.t_id,
             "name": self.name,
             "location": self.location,
             "start_date": self.start_date,
@@ -47,7 +44,7 @@ class Tournament:
 
     def save_tournament_db(self):
         db = self.tournament_db
-        self.t_id = db.insert(self.format_tournament())
+        db.insert(self.format_tournament())
 
     @staticmethod
     def load_tournament_db():
