@@ -1,4 +1,4 @@
 ressources/
 venv/
-.vscode/settings.json
+.vscode/*
 database/
