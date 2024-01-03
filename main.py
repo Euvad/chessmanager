@@ -1,7 +1,7 @@
 from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
-from source.controllers.tournament import TournamentController
-from source.controllers.player import PlayerController
+from controllers.tournament import TournamentController
+from controllers.player import PlayerController
 
 MENU_TITLE = """\
       _______ ______________  __  ____  _______
@@ -24,7 +24,7 @@ def main():
     )
     new_player = FunctionItem("Create a new player", player_controller.new_player)
     load_tournament = FunctionItem(
-        "Load a tournament", tournament_controller.load_tournament
+        "Load a tournament", tournament_controller.draw_tournament
     )
     menu.append_item(new_tournament)
     menu.append_item(load_tournament)
