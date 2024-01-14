@@ -104,7 +104,7 @@ class TournamentView:
             else:
                 print("Invalid selection or player already selected. Please try again.")
 
-            time.sleep(0.2)  # Ajouter un délai si nécessaire
+            time.sleep(0.2)
 
         return player_ids
 
@@ -123,6 +123,8 @@ class TournamentView:
             f"{tournament_data['location']} | Started: {tournament_data['start_date']} | Rounds: {tournament_data['current_round']}/{tournament_data['rounds_total']}",
             show_exit_option=False,
         )
-        roundIsOver = FunctionItem("This round is over.", print("hello world"))
+        roundIsOver = FunctionItem(
+            "This round is over.",
+        )
         menu.append_item(roundIsOver)
         menu.show()
