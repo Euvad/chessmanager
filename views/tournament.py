@@ -49,7 +49,7 @@ class TournamentView:
         # Vérification de la relation entre start_date et end_date
         self.validate_date_range(start_date, end_date)
 
-        round_total = self.get_valid_input(
+        rounds_total = self.get_valid_input(
             f"Please enter how much round {name} will have (must be greater than 0): ",
             self.validate_positive_int,
         )
@@ -66,7 +66,7 @@ class TournamentView:
             "description": description,
             "start_date": start_date,
             "end_date": end_date,
-            "round_total": round_total,
+            "rounds_total": rounds_total,
             "max_players": max_players,
             "players": player_data,
         }
