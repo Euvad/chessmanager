@@ -1,5 +1,6 @@
 from tinydb import TinyDB
 from models.round import Round
+import time
 
 
 class Tournament:
@@ -58,16 +59,43 @@ class Tournament:
 
     def update_tournament_db(self):
         db = self.tournament_db
-        db.update({"rounds": self.rounds}, doc_ids=[self.id])
-        db.update({"players": self.players}, doc_ids=[self.id])
-        db.update({"current_round": self.current_round}, doc_ids=[self.id])
+
+        # Sérialiser les rounds avant chaque mise à jour
+        serialized_rounds = [round_.to_serializable() for round_ in self.rounds]
+
+        # Mettre à jour la base de données avec les informations mises à jour
+        db.update(
+            {
+                "rounds": serialized_rounds,
+                "players": self.players,
+                "current_round": self.current_round,
+            },
+            doc_ids=[self.id],
+        )
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            id=data["id"],
+            name=data["name"],
+            location=data["location"],
+            start_date=data["start_date"],
+            end_date=data["end_date"],
+            description=data["description"],
+            current_round=data["current_round"],
+            rounds_total=data["rounds_total"],
+            max_players=data["max_players"],
+            players=data["players"],
+            rounds=data["rounds"],
+        )
 
     @staticmethod
     def load_tournament_db():
         db = TinyDB("database/tournaments.json")
-        db.all()
         tournaments_list = []
+
         for item in db:
-            tournaments_list.append(item)
+            tournament = Tournament.from_dict(item)
+            tournaments_list.append(tournament)
 
         return tournaments_list

@@ -12,9 +12,11 @@ class PlayerController:
         player_data = player_view.get_player_info()
 
         player_model = Player(
+            id=0,
             last_name=player_data["lastname"],
             first_name=player_data["firstname"],
             birthday=player_data["birthdate"],
+            score=0.0,
             gender=player_data["gender"],
         )
         player_model.save_player_db()
