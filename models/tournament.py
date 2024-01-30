@@ -49,7 +49,14 @@ class Tournament:
 
     def save_tournament_db(self):
         db = self.tournament_db
-        self.id = db.insert(self.format_tournament())
+
+        # Extraire les identifiants des joueurs
+        player_ids = [player.id for player in self.players]
+
+        tournament_data = self.format_tournament()
+        tournament_data["players"] = player_ids
+
+        self.id = db.insert(tournament_data)
         db.update({"id": self.id}, doc_ids=[self.id])
 
     def update_attribute(self, attribute, value):
@@ -61,7 +68,10 @@ class Tournament:
         db = self.tournament_db
 
         # Sérialiser les rounds avant chaque mise à jour
-        serialized_rounds = [round_.to_serializable() for round_ in self.rounds]
+        serialized_rounds = [
+            round_ if isinstance(round_, dict) else round_.to_serializable()
+            for round_ in self.rounds
+        ]
 
         # Mettre à jour la base de données avec les informations mises à jour
         db.update(

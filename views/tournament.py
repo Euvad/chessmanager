@@ -53,7 +53,7 @@ class TournamentView:
         return tournament_data
 
     def get_player_list(self, players, max_players):
-        player_ids = []
+        selected_players = []
         selected_doc_ids = set()
         print(players)
         player_count = 0
@@ -74,10 +74,10 @@ class TournamentView:
             )
             selected_doc_id = player_selections[selected_index]["id"]
             if selected_doc_id not in selected_doc_ids:
-                player_ids.append(selected_doc_id)
+                selected_player = players[selected_index]
+                selected_players.append(selected_player)
                 selected_doc_ids.add(selected_doc_id)
                 player_count += 1
-                selected_player = players[selected_index]
                 print(
                     f"Selected player: {selected_player.last_name} {selected_player.first_name}"
                 )
@@ -86,7 +86,7 @@ class TournamentView:
 
             time.sleep(0.2)
 
-        return player_ids
+        return selected_players
 
     def print_success(self, tournament_data):
         print(f"The tournament {tournament_data['name']} successfully created.")
@@ -132,10 +132,3 @@ class TournamentView:
             result_index = winner_menu.selected_option + 1
 
             match.play_match(result_index)
-
-            # if match.result == 1 or match.result == 2:
-            #     winner_id = match.player1 if match.result == 1 else match.player2
-            #     player_data[winner_id]["score"] += 1
-            # elif match.result == 3:  # Draw
-            #     player_data[match.player1]["score"] += 0.5
-            #     player_data[match.player2]["score"] += 0.5

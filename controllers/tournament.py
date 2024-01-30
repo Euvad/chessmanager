@@ -72,7 +72,7 @@ class TournamentController:
             tournament_data.update_attribute(
                 "end_date", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             )
-            players_base = Player.get_player_db()  # Get the player database
+            players_base = Player.get_player_db()
             self.tournament_view.tournament_end(tournament_data, players_base)
 
     def add_round(self, tournament, round):
@@ -81,7 +81,6 @@ class TournamentController:
     def first_round(self, tournament, players):
         round_number = tournament.current_round
         current_round = Round(round_number)
-        # Shuffle the players for pairing
         random.shuffle(players)
         for i in range(0, len(players), 2):
             player1 = players[i]
@@ -95,24 +94,54 @@ class TournamentController:
         tr = tournament
         round_number = tr.current_round
         current_round = Round(round_number)
-
+        self.calculate_scores(tournament, players)
         players.sort(key=lambda player: player.score, reverse=True)
 
-        used_pairs = set()  # method to fill player who already played
+        played_rounds = tr.rounds[:-1]
+        played_pairs = self.get_played_pairs(played_rounds)
 
         for i in range(0, len(players), 2):
             player1 = players[i]
             player2 = players[i + 1]
-            while (player1.id, player2.id) in used_pairs or (
+            while (player1.id, player2.id) in played_pairs or (
                 player2.id,
                 player1.id,
-            ) in used_pairs:
+            ) in played_pairs:
                 random.shuffle(players)
                 player1 = players[i]
                 player2 = players[i + 1]
 
             match = Match(player1, player2)
             current_round.add_match(match)
-            used_pairs.add((player1.id, player2.id))
+            played_pairs.add((player1.id, player2.id))
+
         self.tournament_view.play_round(current_round)
         self.add_round(tr, current_round)
+
+    def get_played_pairs(self, played_rounds):
+        played_pairs = set()
+        for round in played_rounds:
+            for match in round.matches:
+                player1_id = match.player1.id
+                player2_id = match.player2.id
+                played_pairs.add((player1_id, player2_id))
+                played_pairs.add((player2_id, player1_id))
+        return played_pairs
+
+    def calculate_scores(self, tournament, players):
+        for round_data in tournament.rounds:
+            for match in round_data.matches:
+                player1 = next(
+                    player for player in players if player.id == match.player1.id
+                )
+                player2 = next(
+                    player for player in players if player.id == match.player2.id
+                )
+
+                if match.result == 1:
+                    player1.score += 1
+                elif match.result == 2:
+                    player2.score += 1
+                elif match.result == 3:
+                    player1.score += 0.5
+                    player2.score += 0.5
