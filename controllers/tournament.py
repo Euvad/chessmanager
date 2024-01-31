@@ -64,6 +64,7 @@ class TournamentController:
                 tournament_data.current_round += 1
                 tournament_data.update_tournament_db()
             else:
+                self.calculate_scores(tournament_data, players)
                 self.next_round(tournament_data, players)
                 tournament_data.current_round += 1
                 tournament_data.update_tournament_db()
@@ -72,8 +73,8 @@ class TournamentController:
             tournament_data.update_attribute(
                 "end_date", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             )
-            players_base = Player.get_player_db()
-            self.tournament_view.tournament_end(tournament_data, players_base)
+            self.calculate_scores(tournament_data, players)
+            self.tournament_view.tournament_end(tournament_data, players)
 
     def add_round(self, tournament, round):
         tournament.rounds.append(round)
@@ -94,7 +95,6 @@ class TournamentController:
         tr = tournament
         round_number = tr.current_round
         current_round = Round(round_number)
-        self.calculate_scores(tournament, players)
         players.sort(key=lambda player: player.score, reverse=True)
 
         played_rounds = tr.rounds[:-1]

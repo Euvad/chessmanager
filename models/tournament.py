@@ -85,6 +85,8 @@ class Tournament:
 
     @classmethod
     def from_dict(cls, data):
+        from models.player import Player
+
         return cls(
             id=data["id"],
             name=data["name"],
@@ -96,7 +98,10 @@ class Tournament:
             rounds_total=data["rounds_total"],
             max_players=data["max_players"],
             players=data["players"],
-            rounds=data["rounds"],
+            rounds=[
+                Round.from_dict(round_data, Player.get_player_db())
+                for round_data in data["rounds"]
+            ],
         )
 
     @staticmethod

@@ -109,7 +109,26 @@ class TournamentView:
         menu.append_item(roundIsOver)
         menu.show()
 
-    def tournament_end(self, tournament, player_base):
+    def tournament_end(self, tournament, players):
+        # Création d'un tableau PrettyTable
+        table = PrettyTable()
+
+        # Définition des colonnes du tableau
+        table.field_names = ["Players", "Score"]
+
+        # Tri des joueurs par score décroissant
+        sorted_players = sorted(players, key=lambda x: x.score, reverse=True)
+
+        # Ajout des données au tableau
+        for player in sorted_players:
+            table.add_row([player.last_name, player.score])
+
+        # Affichage du tableau
+        print(table)
+
+        # Trouver et afficher le MVP (joueur avec le score le plus élevé)
+        mvp = sorted_players[0]
+        print(f"\nMVP: {mvp.last_name} avec un score de {mvp.score}")
         user_input = input(
             "Tapez 'exit' pour retourner au menu principal ou appuyez sur Entrée pour continuer: "
         )
