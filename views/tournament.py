@@ -94,6 +94,11 @@ class TournamentView:
 
     def select_tournament(self, tournament_list):
         selection = SelectionMenu.get_selection(tournament_list)
+
+        if selection is None or selection < 0 or selection >= len(tournament_list):
+            print("Invalid selection.")
+            return None
+
         selected_tournament = tournament_list[selection]
         return selected_tournament
 

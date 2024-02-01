@@ -37,6 +37,12 @@ class Player:
         self.player_db.update({"id": self.id}, doc_ids=[self.id])
 
     @staticmethod
+    def filter_players_by_id(player_ids):
+        all_players = Player.get_player_db()
+        filtered_players = [player for player in all_players if player.id in player_ids]
+        return filtered_players
+
+    @staticmethod
     def get_player_db():
         players_db = TinyDB("database/players.json")
 
