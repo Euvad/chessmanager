@@ -1,7 +1,7 @@
 import time
-from consolemenu import *
-from consolemenu.items import *
-from dateutil import parser
+from consolemenu import SelectionMenu
+from consolemenu import ConsoleMenu
+from consolemenu.items import FunctionItem
 import re
 from prettytable import PrettyTable
 
@@ -22,8 +22,13 @@ class TournamentView:
 
     def validate_positive_int(self, value):
         int_value = int(value)
+
         if int_value <= 0:
             raise ValueError("Value must be greater than 0.")
+
+        if int_value % 2 != 0:
+            raise ValueError("Value must be an even integer.")
+
         return int_value
 
     def get_tournament_info(self, players):
@@ -37,7 +42,7 @@ class TournamentView:
         )
 
         max_players = self.get_valid_input(
-            f"Please enter how much players will play in this tournament (must be greater than 0): ",
+            f"Please enter how much players in {name} will play in this tournament (must be greater than 0): ",
             self.validate_positive_int,
         )
 
@@ -94,7 +99,6 @@ class TournamentView:
 
     def select_tournament(self, tournament_list):
         selection = SelectionMenu.get_selection(tournament_list)
-
         if selection is None or selection < 0 or selection >= len(tournament_list):
             print("Invalid selection.")
             return None
@@ -105,7 +109,8 @@ class TournamentView:
     def draw_tournament(self, tournament_data):
         menu = ConsoleMenu(
             f"{tournament_data['name']} | {tournament_data['description']}",
-            f"{tournament_data['location']} | Started: {tournament_data['start_date']} | Rounds: {tournament_data['current_round']}/{tournament_data['rounds_total']}",
+            f"{tournament_data['location']} | Started: {tournament_data['start_date']} | Rounds: {
+                tournament_data['current_round']}/{tournament_data['rounds_total']}",
             show_exit_option=False,
         )
         roundIsOver = FunctionItem(

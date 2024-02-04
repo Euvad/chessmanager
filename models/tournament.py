@@ -1,6 +1,5 @@
 from tinydb import TinyDB
 from models.round import Round
-import time
 
 
 class Tournament:

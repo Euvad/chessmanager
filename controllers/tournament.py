@@ -3,8 +3,6 @@ from models.tournament import Tournament
 from models.round import Round
 from models.match import Match
 from models.player import Player
-import time
-from prettytable import PrettyTable
 from datetime import datetime
 import random
 
@@ -61,7 +59,7 @@ class TournamentController:
         while tournament_data.current_round < tournament_data.rounds_total:
             if tournament_data.current_round == 0:
                 self.first_round(tournament_data, players)
-                tournament_data.current_round += 1
+                tournament_data.current_round += 1  # SUPRIMMER LA DOUBLURE
                 tournament_data.update_tournament_db()
             else:
                 self.calculate_scores(tournament_data, players)
@@ -103,6 +101,8 @@ class TournamentController:
         for i in range(0, len(players), 2):
             player1 = players[i]
             player2 = players[i + 1]
+
+            # Vérifier si le match a déjà été joué dans un round précédent
             while (player1.id, player2.id) in played_pairs or (
                 player2.id,
                 player1.id,
@@ -110,6 +110,10 @@ class TournamentController:
                 random.shuffle(players)
                 player1 = players[i]
                 player2 = players[i + 1]
+
+                # Vérifier si tous les matchs ont déjà été joués pour éviter une boucle infinie
+                if len(played_pairs) == len(players) // 2:
+                    break
 
             match = Match(player1, player2)
             current_round.add_match(match)
@@ -120,8 +124,8 @@ class TournamentController:
 
     def get_played_pairs(self, played_rounds):
         played_pairs = set()
-        for round in played_rounds:
-            for match in round.matches:
+        for rnd in played_rounds:
+            for match in rnd.matches:
                 player1_id = match.player1.id
                 player2_id = match.player2.id
                 played_pairs.add((player1_id, player2_id))
@@ -129,6 +133,9 @@ class TournamentController:
         return played_pairs
 
     def calculate_scores(self, tournament, players):
+        for player in players:
+            player.score = 0.0
+
         for round_data in tournament.rounds:
             for match in round_data.matches:
                 player1 = next(

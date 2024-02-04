@@ -1,7 +1,6 @@
 from models.player import Player
 from models.tournament import Tournament
 from views.rapport import Rapport
-import time
 from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
 

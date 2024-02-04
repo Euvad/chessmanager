@@ -3,7 +3,6 @@ import os
 from prettytable import PrettyTable
 from consolemenu import ConsoleMenu
 from consolemenu.items import FunctionItem
-import time
 
 
 class Rapport:
