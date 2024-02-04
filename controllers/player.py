@@ -1,6 +1,5 @@
 from views.player import PlayerView
 from models.player import Player
-import time
 
 
 class PlayerController:

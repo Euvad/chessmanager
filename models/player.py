@@ -1,5 +1,4 @@
 from tinydb import TinyDB
-import time
 
 
 # mettre tinydb player db plus global
