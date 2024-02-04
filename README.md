@@ -61,4 +61,4 @@ max-line-length = 119
 ```
 flake8 --format=html --htmldir=flake-report
 ```
-- Le rapport sera généré dans le dossier flake8.
+- Le rapport sera généré dans le dossier flake-report.
